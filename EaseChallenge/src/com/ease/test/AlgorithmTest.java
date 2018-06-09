@@ -123,4 +123,52 @@ public class AlgorithmTest {
 		Assert.assertEquals(new Integer(2), dto.getXLength());
 		Assert.assertEquals(new Integer(2), dto.getYLength());
 	}
+	
+	/**
+	 * INTEGRATION TESTING
+	 */
+	
+	@Test
+	public void integration_test_1() {
+		FileHandler fh = new FileHandler();
+		FileHandlerDto dto = new FileHandlerDto();
+		dto = fh.readFile(new File("").getAbsolutePath() + File.separator + "src" + File.separator + "com" + File.separator + "ease" + File.separator + "resources" + File.separator + "test_1.txt");
+		Search search = new Search();
+		Map<String, SearchModel> returnVal = search.processGrid(dto);
+		Assert.assertEquals("9-5-3-2-1", returnVal.get("longestDrop").getPath());
+		Assert.assertEquals("9-5-3-2-1", returnVal.get("highestDrop").getPath());
+	}
+	
+	@Test
+	public void integration_test_2() {
+		FileHandler fh = new FileHandler();
+		FileHandlerDto dto = new FileHandlerDto();
+		dto = fh.readFile(new File("").getAbsolutePath() + File.separator + "src" + File.separator + "com" + File.separator + "ease" + File.separator + "resources" + File.separator + "test_2.txt");
+		Search search = new Search();
+		Map<String, SearchModel> returnVal = search.processGrid(dto);
+		Assert.assertEquals("10-7-6-5-4-3-2-1", returnVal.get("longestDrop").getPath());
+		Assert.assertEquals("17-3", returnVal.get("highestDrop").getPath());
+	}
+	
+	@Test
+	public void integration_test_3() {
+		FileHandler fh = new FileHandler();
+		FileHandlerDto dto = new FileHandlerDto();
+		dto = fh.readFile(new File("").getAbsolutePath() + File.separator + "src" + File.separator + "com" + File.separator + "ease" + File.separator + "resources" + File.separator + "test_3.txt");
+		Search search = new Search();
+		Map<String, SearchModel> returnVal = search.processGrid(dto);
+		Assert.assertEquals("7-5-2-1", returnVal.get("longestDrop").getPath());
+		Assert.assertEquals("9-2-1", returnVal.get("highestDrop").getPath());
+	}
+	
+	@Test
+	public void integration_test_4() {
+		FileHandler fh = new FileHandler();
+		FileHandlerDto dto = new FileHandlerDto();
+		dto = fh.readFile(new File("").getAbsolutePath() + File.separator + "src" + File.separator + "com" + File.separator + "ease" + File.separator + "resources" + File.separator + "test_4.txt");
+		Search search = new Search();
+		Map<String, SearchModel> returnVal = search.processGrid(dto);
+		Assert.assertEquals("8-4-2", returnVal.get("longestDrop").getPath());
+		Assert.assertEquals("8-4-2", returnVal.get("highestDrop").getPath());
+	}
 }
