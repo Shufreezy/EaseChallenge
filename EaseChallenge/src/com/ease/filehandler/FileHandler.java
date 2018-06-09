@@ -47,6 +47,8 @@ public class FileHandler {
 			System.out.println("Error reading file: " + fileName);
 		}
 		
+		contentRow.remove(0);
+		
 		dto.setContents(contentRow.toArray(new Long[dto.getYLength()][dto.getXLength()]));
 		
 		return dto;
