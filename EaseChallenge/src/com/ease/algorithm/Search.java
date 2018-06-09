@@ -1,9 +1,7 @@
 package com.ease.algorithm;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import com.ease.algorithm.model.Position;
@@ -17,11 +15,13 @@ import com.ease.filehandler.dto.FileHandlerDto;
 public class Search {
 
 	static Long[][] contents;
-	static SearchModel highestDrop = new SearchModel();
-	static SearchModel longestDrop = new SearchModel();
+	static SearchModel highestDrop;
+	static SearchModel longestDrop;
 
 	public Map<String, SearchModel> processGrid(FileHandlerDto dto) {
 		contents = dto.getContents();
+		highestDrop = new SearchModel();
+		longestDrop = new SearchModel();
 		LinkedList<Position> searchQueue = new LinkedList<Position>();
 
 		Position pos;
@@ -48,6 +48,11 @@ public class Search {
 
 		Map<String, SearchModel> returnValue = new HashMap<String, SearchModel>();
 
+		highestDrop.setPath(highestDrop.getPath().substring(0, highestDrop.getPath().length() - 1));
+		if (!highestDrop.equals(longestDrop)) {
+			 longestDrop.setPath(longestDrop.getPath().substring(0, longestDrop.getPath().length() - 1));
+		}
+
 		returnValue.put("highestDrop", highestDrop);
 		returnValue.put("longestDrop", longestDrop);
 
@@ -58,7 +63,7 @@ public class Search {
 		SearchModel currentSearch;
 
 		Boolean hasMoved;
-		
+
 		while (!searchQueue.isEmpty()) {
 
 			hasMoved = false;
@@ -87,25 +92,25 @@ public class Search {
 			}
 
 			currentSearch.setLastValue(currentContent);
-			
+
 			Position copyOfItem;
 
 			// ENQUEUE LEFT
 			if (leftContent != null && currentContent > leftContent) {
 				hasMoved = true;
 				copyOfItem = new Position(item);
-				
+
 				copyOfItem.setX(item.getX() - 1);
 				copyOfItem.getSearchModel().setLength(copyOfItem.getSearchModel().getLength() + 1);
 				copyOfItem.getSearchModel().setPath(copyOfItem.getSearchModel().getPath() + "" + leftContent + "-");
-				
+
 				searchQueue.add(copyOfItem);
 			}
 			// ENQUEUE UP
 			if (upContent != null && currentContent > upContent) {
 				hasMoved = true;
 				copyOfItem = new Position(item);
-				
+
 				copyOfItem.setY(item.getY() - 1);
 				copyOfItem.getSearchModel().setLength(copyOfItem.getSearchModel().getLength() + 1);
 				copyOfItem.getSearchModel().setPath(copyOfItem.getSearchModel().getPath() + "" + upContent + "-");
@@ -116,24 +121,23 @@ public class Search {
 			if (rightContent != null && currentContent > rightContent) {
 				hasMoved = true;
 				copyOfItem = new Position(item);
-				
+
 				copyOfItem.setX(item.getX() + 1);
 				copyOfItem.getSearchModel().setLength(copyOfItem.getSearchModel().getLength() + 1);
 				copyOfItem.getSearchModel().setPath(copyOfItem.getSearchModel().getPath() + "" + rightContent + "-");
 				searchQueue.add(copyOfItem);
-				
+
 			}
 
 			// ENQUEUE DOWN
 			if (downContent != null && currentContent > downContent) {
 				hasMoved = true;
 				copyOfItem = new Position(item);
-				
+
 				copyOfItem.setY(item.getY() + 1);
 				copyOfItem.getSearchModel().setLength(copyOfItem.getSearchModel().getLength() + 1);
 				copyOfItem.getSearchModel().setPath(copyOfItem.getSearchModel().getPath() + "" + downContent + "-");
 				searchQueue.add(copyOfItem);
-//				System.out.println(copyOfItem.getSearchModel().getPath());
 			}
 
 			// NO MOVEMENTS
@@ -155,9 +159,9 @@ public class Search {
 				}
 
 			}
-			
+
 			searchQueue.removeFirst();
 		}
-		
+
 	}
 }
